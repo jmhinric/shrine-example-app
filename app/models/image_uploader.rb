@@ -1,18 +1,17 @@
-require "image_processing/mini_magick"
+require "image_processing/mini_magick" # for image processing and versions plugin
 
 class ImageUploader < Shrine
-  include ImageProcessing::MiniMagick
-  # plugin :store_dimensions
-  plugin :logging
-  plugin :determine_mime_type
-  plugin :processing
-  plugin :versions   # enable Shrine to handle a hash of files
-  # plugin :validation_helpers
+  include ImageProcessing::MiniMagick # for image processing and versions plugin
+  plugin :processing # for image processing and versions plugin
+  plugin :versions   # image processing - enable Shrine to handle a hash of files
 
-  # Attacher.validate do
-    # validate_max_size 5*1024*1024, message: "is too large (max is 5 MB)"
+  # plugin :store_dimensions # extract image dimensions- throws -- fastimage error if used with versions plugin?
+
+  plugin :validation_helpers
+  Attacher.validate do
+    validate_max_size 2*1024*1024, message: "is too large (max is 5 MB)"
     # validate_mime_type_inclusion ["application/pdf"]
-  # end
+  end
 
   process(:store) do |io, context|
     original = io.download

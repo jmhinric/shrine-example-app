@@ -8,11 +8,17 @@ class PhotosController < ApplicationController
 
   def show
     @photo = Photo.find(params[:id])
+    @photo.reload
   end
 
   def create
-    photo = Photo.create(photo_params)
-    redirect_to photo_path(photo)
+    photo = Photo.new(photo_params)
+    if photo.valid?
+      photo.save
+      redirect_to photo_path(photo)
+    else
+      redirect_to new_photo_path
+    end
   end
 
   private
