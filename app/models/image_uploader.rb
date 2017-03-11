@@ -1,9 +1,9 @@
-require "image_processing/mini_magick" # for image processing and versions plugin
+# require "image_processing/mini_magick" # for image processing and versions plugin
 
 class ImageUploader < Shrine
-  include ImageProcessing::MiniMagick # for image processing and versions plugin
-  plugin :processing # for image processing and versions plugin
-  plugin :versions   # image processing - enable Shrine to handle a hash of files
+  # include ImageProcessing::MiniMagick # for image processing and versions plugin
+  # plugin :processing # for image processing and versions plugin
+  # plugin :versions   # image processing - enable Shrine to handle a hash of files
 
   # plugin :store_dimensions # extract image dimensions- throws -- fastimage error if used with versions plugin?
 
@@ -13,13 +13,13 @@ class ImageUploader < Shrine
     # validate_mime_type_inclusion ["application/pdf"]
   end
 
-  process(:store) do |io, context|
-    original = io.download
+  # process(:store) do |io, context|
+  #   original = io.download
 
-    size_800 = resize_to_limit!(original, 800, 800)
-    size_500 = resize_to_limit(size_800,  500, 500)
-    size_300 = resize_to_limit(size_500,  300, 300)
+  #   size_800 = resize_to_limit!(original, 800, 800)
+  #   size_500 = resize_to_limit(size_800,  500, 500)
+  #   size_300 = resize_to_limit(size_500,  300, 300)
 
-    {original: io, large: size_800, medium: size_500, small: size_300}
-  end
+  #   {original: io, large: size_800, medium: size_500, small: size_300}
+  # end
 end
